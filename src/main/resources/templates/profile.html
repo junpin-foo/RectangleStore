@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lan="en">
+
+<head>
+    <link href = "../static/css/profile.css" th:href="@{/css/profile.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/profile.js}" defer></script>
+    <title>Rectangle Profile</title>
+</head>
+
+<body>
+    <div class="WhiteBox">
+
+        <div class="GreyBox">
+
+            <h2>Profile</h2>
+
+            <div id="colouredProfile" class="colouredProfile">
+                <br>
+                <p id="nameOut" > temp </p> <br>
+                <p id="messageOut"> temp2 </p>
+            </div>
+
+
+            <table th:each="record : ${ret}" class ="TableFormat">
+                
+                <tr>
+                    <th>Name</th>
+                    <td th:utext="${record.getName()}" id="nameIn"></td>
+                </tr>
+                <tr>
+                    <th>Colour (Hex)</th>
+                    <td th:utext="${record.getColour()}" id="colourIn"></td>
+                </tr>
+                <tr>
+                    <th>Message</th>
+                    <td th:utext="${record.getMessage()}" id="messageIn"></td>
+                </tr>
+                <tr>
+                    <th>Width (cm)</th>
+                    <td th:utext="${record.getWidth()}" id="widthIn"></td>
+                </tr>
+                <tr>
+                    <th>Height (cm)</th>
+                    <td th:utext="${record.getHeight()}" id="heightIn"></td>
+                </tr>
+            </table>
+
+            <input type="button" class="btn" value="Back" onclick="location.href='/View'">
+        
+        </div>
+    </div>
+
+</body>
+
+
+</html>

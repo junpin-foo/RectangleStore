@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lan="en">
+
+<head>
+    <link rel="stylesheet" href="../static/css/view.css" th:href="@{/css/view.css}">
+    <title>Rectangle Store</title>
+</head>
+
+<body>
+    <div class="WhiteBox">
+
+        <table id="links" class="Links">
+            <thead>
+                <tr>
+                    <th><a href="./Home.html">Home</a></th>
+                    <th><a href="/rectangle">Add a Rectangle</a></th>
+                    <th><a href="/View">View all Rectangles</a></th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="GreyBox">
+
+            <table class="TableFormat" id="Table">
+                <thead>
+                    <tr class="RowOne">
+                        <th>Name</th>
+                            <th>Colour (Hex)</th>
+                            <th>Message</th>
+                            <th>Width (cm)</th>
+                            <th>Height (cm)</th>
+                            <th>Delete Row</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tbody>
+                        <tr th:each="record : ${records}" >
+                            <td><a href="#" th:href="@{/profile/{uid}(uid=${record.getID()})}" th:utext="${record.getName()}"></a></td>
+                            <td th:utext="${record.getColour()}" th:style="'background-color:' + ${record.getColour()}"></td>
+                            <td th:utext="${record.getMessage()}"></td>
+                            <td th:utext="${record.getWidth()}"></td>
+                            <td th:utext="${record.getHeight()}"></td>
+                            <form action="#" method="post" th:action="@{/DELETE/{id}(id=${record.getID()})}">
+                                <td><input type="submit" class="btnDelete" value="DELETE"></td>
+                            </form>
+                        </tr>
+                    </tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+
+</html>

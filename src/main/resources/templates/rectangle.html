@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lan="en">
+
+<head>
+    <link rel="stylesheet" href="./stylesheets/add.css">
+    <title>Adding Rectangle</title>
+</head>
+
+<body>
+    <div class="WhiteBox">
+
+        <table id="links" class="Links">
+            <thead>
+                <tr>
+                    <th><a href="/Home.html">Home</a></th>
+                    <th><a href="/rectangle">Add a Rectangle</a></th>
+                    <th><a href="/View">View all Rectangles</a></th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="GreyBox">
+
+            
+                <table class="AddTable" id="Table">
+                    <thead>
+                        <tr class="RowOne">
+                            <th>Name</th>
+                            <th>Colour</th>
+                            <th>Message</th>
+                            <th>Width (cm)</th>
+                            <th>Height (cm)</th>
+                        </tr>
+                    </thead>
+                    <form id = "rec-form" action="#" method="post" th:action="@{/rectangle}" th:object="${rectangle}">
+                        <tbody>
+                            <tr>
+                                <td><input type="text" th:field=*{Name} placeholder=" name" class="Textbox" maxlength="20"></td> 
+                                <td><input type="color" th:field=*{Colour} class="Textbox"></td>  
+                                <td><input type="text" th:field=*{Message} placeholder="msg" class="Textbox" maxlength="20"></td>  
+                                <td><input type="number" th:field=*{Width} placeholder="00" class="Textbox" min="1" max="25"></td>  
+                                <td><input type="number" th:field=*{Height} placeholder="00" class="Textbox" min="1" max="25"></td>
+                            </tr>
+                        </tbody>
+            
+                    </form>    
+                </table>
+                <input type="submit" value="Submit" class="btn" form="rec-form">
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -55,31 +55,32 @@ public class Main {
   String index(Map<String, Object> model) {
     String name = "Bobby";
     model.put("name", name);
-    return "index";
+    return "home";
   }
 
+
   @GetMapping(
-    path = "/person"
+    path = "/rectangle"
   )
-  public String getPersonForm(Map<String, Object> model){
-    Person person = new Person();  // creates new person object with empty fname and lname
-    model.put("person", person);
-    return "person";
+  public String getRecForm(Map<String, Object> model){
+    Rectangle rec = new Rectangle();  // creates new person object with empty fname and lname
+    model.put("rectangle", rec);
+    return "rectangle";
   }
 
   @PostMapping(
-    path = "/person",
+    path = "/rectangle",
     consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
   )
-  public String handleBrowserPersonSubmit(Map<String, Object> model, Person person) throws Exception {
-    // Save the person data into the database
+  public String handleBrowserRecSubmit(Map<String, Object> model, Rectangle rec) throws Exception {
+    // Save the red data into the database
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS people (id serial, fname varchar(20), lname varchar(20))");
-      String sql = "INSERT INTO people (fname,lname) VALUES ('" + person.getFname() + "','" + person.getLname() + "')";
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS recs (id serial, Name varchar(20), Colour varchar(20), Message varchar(20), Width integer, Height integer)");
+      String sql = "INSERT INTO recs (Name, Colour, Message, Width, Height) VALUES ('" + rec.getName() + "','" + rec.getColour() + "','" + rec.getMessage() + "','" + rec.getWidth() + "','" + rec.getHeight() + "')";
       stmt.executeUpdate(sql);
-      System.out.println(person.getFname() + " " + person.getLname());
-      return "redirect:/person/success";
+      System.out.println(rec.getName() + " " + rec.getColour());
+      return "redirect:/rectangle/success";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
@@ -87,30 +88,84 @@ public class Main {
 
   }
 
-  @GetMapping("/person/success")
-  public String getPersonSuccess(){
+  @GetMapping("/View")
+  public String updateDB(Map<String, Object> model) throws Exception{
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM recs");
+  
+      ArrayList<Rectangle> output2 = new ArrayList<Rectangle>();
+      while(rs.next()){
+        Rectangle output = new Rectangle();
+        output.setName("" + rs.getObject("Name"));
+        output.setColour("" + rs.getObject("Colour"));
+        output.setMessage("" + rs.getObject("Message"));
+        output.setWidth(rs.getInt("Width"));
+        output.setHeight(rs.getInt("Height"));
+        output.setID(rs.getInt("id"));
+
+        output2.add(output);
+      }  
+
+      model.put("records", output2);
+      return "View";
+    }catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+  @GetMapping("/rectangle/success")
+  public String getRecSuccess(){
     return "success";
   }
 
-  @RequestMapping("/db")
-  String db(Map<String, Object> model) {
+  @GetMapping("/profile/{id}")
+  public String getProfile(@PathVariable("id") int recID, Map<String, Object> model){
+    try (Connection connection = dataSource.getConnection()){
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM recs");
+      
+      while(rs.next()){
+        if(recID == (rs.getInt("id"))){
+          Rectangle output = new Rectangle();
+          output.setName("" + rs.getObject("Name"));
+          output.setColour("" + rs.getObject("Colour"));
+          output.setMessage("" + rs.getObject("Message"));
+          output.setWidth(rs.getInt("Width"));
+          output.setHeight(rs.getInt("Height"));
+          output.setID(rs.getInt("id"));
+          model.put("ret", output);
+        }
+      }
+      
+      return "profile";
+
+    }catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+  @PostMapping(
+    path = "/DELETE/{id}",
+    consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+  public String handleDeleteButton(@PathVariable("id") int recID, Map<String, Object> model) throws Exception {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-
-      ArrayList<String> output = new ArrayList<String>();
-      while (rs.next()) {
-        output.add("Read from DB: " + rs.getTimestamp("tick"));
-      }
-
-      model.put("records", output);
-      return "db";
+      stmt.executeUpdate("DELETE FROM recs WHERE id=" + recID + ";");
+      return "redirect:/rectangle/successD";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
     }
+
+  }
+
+  @GetMapping("/rectangle/successD")
+  public String getRecSuccessDelete(){
+    return "successD";
   }
 
   @Bean
