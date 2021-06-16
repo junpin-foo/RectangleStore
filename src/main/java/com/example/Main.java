@@ -92,6 +92,7 @@ public class Main {
   public String updateDB(Map<String, Object> model) throws Exception{
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS recs (id serial, Name varchar(20), Colour varchar(20), Message varchar(20), Width integer, Height integer)");
       ResultSet rs = stmt.executeQuery("SELECT * FROM recs");
   
       ArrayList<Rectangle> output2 = new ArrayList<Rectangle>();

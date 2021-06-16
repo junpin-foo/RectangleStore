@@ -78,10 +78,8 @@ body{
     border-radius:5px;
     padding:5px;
     float:none;
-    margin-right:10px;
     border:none;
     pointer-events:visiblePainted;
-    margin-bottom:10px;
   }
   
   .btn:hover {
