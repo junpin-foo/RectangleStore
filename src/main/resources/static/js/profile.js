@@ -3,6 +3,7 @@ window.addEventListener("load", function(){
     let colour = document.getElementById("colourIn").innerHTML;
     document.getElementById("colouredProfile").style.backgroundColor = colour;
     console.log(colour);
+    console.log(colour);
 
     if(colour == "#000000"){
         document.getElementById("nameOut").style.color="white";
