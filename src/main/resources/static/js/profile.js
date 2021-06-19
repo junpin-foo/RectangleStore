@@ -3,6 +3,11 @@ window.addEventListener("load", function(){
     let colour = document.getElementById("colourIn").innerHTML;
     document.getElementById("colouredProfile").style.backgroundColor = colour;
     console.log(colour);
+
+    if(colour == "#000000"){
+        document.getElementById("nameOut").style.color="white";
+        document.getElementById("messageOut").style.color= "white";
+    }
     
     let w = document.getElementById("widthIn").innerHTML;
     document.getElementById("colouredProfile").style.width = w + "cm"; 
@@ -18,10 +23,6 @@ window.addEventListener("load", function(){
     if(n){
         document.getElementById("nameOut").textContent = "" + n;
     }
-    /*
-    var content = document.querySelector(".nameOut")
-    content.textContent = "" + n;
-    */
 
     let m = document.getElementById("messageIn").innerHTML;
     console.log(m);
@@ -29,9 +30,4 @@ window.addEventListener("load", function(){
         document.getElementById("messageOut").textContent = "\"" + m + "\"";
     }
     
-    /*
-    var content = document.querySelector(".messageOut")
-    content.textContent = "\"" + m + "\"";
-    */
-
 });

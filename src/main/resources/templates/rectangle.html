@@ -35,11 +35,11 @@
                     <form id = "rec-form" action="#" method="post" th:action="@{/rectangle}" th:object="${rectangle}">
                         <tbody>
                             <tr>
-                                <td><input type="text" th:field=*{Name} placeholder=" name" class="Textbox" maxlength="20"></td> 
+                                <td><input type="text" th:field=*{Name} placeholder=" name" class="Textbox" maxlength="20" required></td> 
                                 <td><input type="color" th:field=*{Colour} class="Textbox"></td>  
                                 <td><input type="text" th:field=*{Message} placeholder="msg" class="Textbox" maxlength="20"></td>  
-                                <td><input type="number" th:field=*{Width} placeholder="00" class="Textbox" min="1" max="25"></td>  
-                                <td><input type="number" th:field=*{Height} placeholder="00" class="Textbox" min="1" max="25"></td>
+                                <td><input type="number" th:field=*{Width} placeholder="00" class="Textbox" min="1" max="25" required></td>  
+                                <td><input type="number" th:field=*{Height} placeholder="00" class="Textbox" min="1" max="25" required></td>
                             </tr>
                         </tbody>
             
