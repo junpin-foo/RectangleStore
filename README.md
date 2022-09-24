@@ -10,3 +10,5 @@ After that, your rectangle will be uploaded to our database where you can choose
 This website is also made by useing heroku to hose the webpage.
 
 Made by Jun Pin Foo.
+
+Link: https://asn2fjp-276.herokuapp.com/Home.html
